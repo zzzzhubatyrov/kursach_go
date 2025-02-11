@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm/logger"
 )
 
 func main() {
@@ -38,6 +39,9 @@ func main() {
 	}
 
 	db.Debug().AutoMigrate(mod...)
+
+	customLogger := db.Logger.(*storage.CustomLogger)
+	customLogger.LogMode(logger.Info)
 	// Вывод информации о устройствах
 	// for _, device := range devices {
 	// fmt.Printf("Device ID: %s, Type: %s, Status: %s\n", device.DeviceID, device.DeviceType, device.Status)

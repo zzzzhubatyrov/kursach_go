@@ -45,7 +45,7 @@ type NATRule struct {
 }
 
 type Switch struct {
-	DeviceID   string `json:"device_id" gorm:"primaryKey"`
+	DeviceID   uint32 `json:"device_id" gorm:"primaryKey"`
 	MACAddress string `json:"mac_address"`
 	Ports      []Port `json:"ports" gorm:"foreignKey:SwitchID"`
 	VLANs      []VLAN `json:"vlans" gorm:"foreignKey:SwitchID"`
