@@ -2,6 +2,7 @@ package storage
 
 import (
 	"fmt"
+	"kurs/pkg"
 	"log"
 	"os"
 	"time"
@@ -26,7 +27,7 @@ func SQLiteStorageInit() (*gorm.DB, error) {
 		},
 	)
 
-	customLogger := &CustomLogger{logger: newLogger, level: logger.Info, file: file}
+	customLogger := &pkg.CustomLogger{Logger: newLogger, Level: logger.Info, File: file}
 
 	db, err := gorm.Open(sqlite.Open("kurs.db"), &gorm.Config{
 		Logger: customLogger,
