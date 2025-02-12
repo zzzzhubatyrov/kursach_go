@@ -6,13 +6,13 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm/logger"
+	webview "github.com/webview/webview_go"
 )
 
 func main() {
 	app := fiber.New()
 
-	db, err := storage.SQLiteStorageInit()
+	db, err := storage.NewSqlite()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,16 +38,25 @@ func main() {
 		&models.PONPort{},
 	}
 
-	db.Debug().AutoMigrate(mod...)
+	db.AutoMigrate(mod...)
 
-	customLogger := db.Logger.(*storage.CustomLogger)
-	customLogger.LogMode(logger.Info)
+	// customLogger := db.Logger.(*pkg.CustomLogger)
+	// customLogger.LogMode(logger.Info)
 	// Вывод информации о устройствах
 	// for _, device := range devices {
 	// fmt.Printf("Device ID: %s, Type: %s, Status: %s\n", device.DeviceID, device.DeviceType, device.Status)
 	// }
 
-	if err := app.Listen(":5000"); err != nil {
-		log.Fatal(err)
-	}
+	go func() {
+		if err := app.Listen(":3000"); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	wv := webview.New(true)
+	// defer wv.Destroy()
+	wv.SetTitle("zhubatyrov-kp")
+	wv.SetSize(800, 600, webview.HintNone)
+	wv.Navigate("http://localhost:3000")
+	wv.Run()
 }

@@ -16,3 +16,5 @@
 [TRACE] SQL: CREATE TABLE `firewalls` (`device_id` integer PRIMARY KEY AUTOINCREMENT,`status` text) | Rows affected: 0
 [TRACE] SQL: CREATE TABLE `olts` (`device_id` integer PRIMARY KEY AUTOINCREMENT,`ip_address` text,`mac_address` text,`status` text) | Rows affected: 0
 [TRACE] SQL: CREATE TABLE `pon_ports` (`id` integer PRIMARY KEY AUTOINCREMENT,`port_number` integer,`status` text,`signal_strength` integer) | Rows affected: 0
+[TRACE] SQL: CREATE TABLE `ports__temp`  (`id` integer PRIMARY KEY AUTOINCREMENT,`switch_id` integer,`number` integer,`mac_address` text,`status` text,CONSTRAINT `fk_switches_ports` FOREIGN KEY (`switch_id`) REFERENCES `switches`(`device_id`)) | Rows affected: 0
+[TRACE] SQL: CREATE TABLE `vlans__temp`  (`id` integer PRIMARY KEY AUTOINCREMENT,`switch_id` integer,`name` text,`ports` integer[],CONSTRAINT `fk_switches_vla_ns` FOREIGN KEY (`switch_id`) REFERENCES `switches`(`device_id`),CONSTRAINT `fk_olts_vla_ns` FOREIGN KEY (`id`) REFERENCES `olts`(`device_id`)) | Rows affected: 0

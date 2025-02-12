@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func SQLiteStorageInit() (*gorm.DB, error) {
+func NewSqlite() (*gorm.DB, error) {
 	file, err := os.OpenFile("gorm.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open log file: %v", err)
